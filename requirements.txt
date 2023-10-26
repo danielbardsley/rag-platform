@@ -1,0 +1,10 @@
+boto3
+opensearch-py
+pandas
+tiktoken
+openai
+numpy
+matplotlib
+plotly
+scipy
+scikit-learn

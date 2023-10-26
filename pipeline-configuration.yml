@@ -1,0 +1,25 @@
+version: "2"
+log-pipeline:
+  source:
+    s3:
+      codec:
+        json:
+      compression: "none"
+      aws:
+        region: "us-east-1"
+        sts_role_arn: "arn:aws:iam::571748613148:role/opensearch-ingestion-role"
+      acknowledgments: true
+      scan:
+        scheduling:
+          interval: PT24H
+        buckets:
+          - bucket:
+              name: "espn-source"
+  sink:
+    - opensearch:
+        hosts: ["https://yl0p9uqdvbuhdvg1hthd.us-east-1.aoss.amazonaws.com"]
+        index: "espn-news"
+        aws:
+          sts_role_arn: "arn:aws:iam::571748613148:role/opensearch-ingestion-role"
+          region: "us-east-1"
+          serverless: true
