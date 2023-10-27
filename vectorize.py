@@ -66,7 +66,7 @@ def answer_question(
         df,
         model="text-davinci-003",
         question="show me a random magic the gathering card?",
-        max_len=1000,
+        max_len=10000,
         size="ada",
         max_tokens=200,
         stop_sequence=None
@@ -79,7 +79,7 @@ def answer_question(
     try:
         # Create a completions using the question and context
         response = openai.Completion.create(
-            prompt=f"Answer the question based on the context below, and if the question can't be answered based on the context, say \"Hmm. I'm not sure. Sorry!.\"\n\nContext: {context}\n\n---\n\nQuestion: {question}\nAnswer:",
+            prompt=f"Answer the question based on the context below, and if the question can't be answered based on the context then don't use the context.\"\n\nContext: {context}\n\n---\n\nQuestion: {question}\nAnswer:",
             temperature=0.4,
             max_tokens=max_tokens,
             top_p=1,
@@ -94,7 +94,9 @@ def answer_question(
         return ""
 
 
-answer_question(df, question="Should I play Deebo Samuel in my fantasy football team?")
+while True:
+    question = input("Ask me a question: ")
+    print(answer_question(df, question=question))
 
 
 
